@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" />
-  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/styles.css?v=2" />
 </head>
 <body>
 
@@ -30,7 +30,8 @@
           <li><a href="#how-it-works">HOW IT WORKS</a></li>
           <li><a href="#tiers">SYSTEMS</a></li>
           <li><a href="#app">THE APP</a></li>
-          <li><a href="#yield">YIELD</a></li>
+          <!-- Hidden with the YIELD section — restore together -->
+          <!-- <li><a href="#yield">YIELD</a></li> -->
           <li class="nav-mobile-cta-item"><a href="#contact" class="btn nav-mobile-cta-btn" data-open-survey>Request a design</a></li>
         </ul>
 
@@ -129,28 +130,6 @@
     </div>
 
     <!-- =====================================================
-         STATS STRIP
-         ===================================================== -->
-    <section class="stats-section" aria-label="Key numbers">
-      <div class="container">
-        <div class="stats-grid">
-          <div class="stat-item fade-up">
-            <div class="stat-number">400<span class="stat-suffix">+</span></div>
-            <div class="stat-label">lbs/year per bed</div>
-          </div>
-          <div class="stat-item fade-up">
-            <div class="stat-number">0</div>
-            <div class="stat-label">synthetic inputs</div>
-          </div>
-          <div class="stat-item fade-up">
-            <div class="stat-number">100<span class="stat-suffix">%</span></div>
-            <div class="stat-label">organic growing methods</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- =====================================================
          THE DIFFERENCE
          ===================================================== -->
     <section class="difference-section" id="difference" aria-labelledby="difference-h2">
@@ -235,10 +214,10 @@
           <p class="section-body">Six steps. Four to six weeks from initial visit to your first plate.</p>
         </div>
 
-        <!-- Row 1: steps 1–3 -->
-        <div class="hiw-row">
+        <!-- Six uniform steps: 3 across on desktop, 2 at 900px, 1 at 560px -->
+        <div class="hiw-grid" data-stagger>
 
-          <div class="hiw-item hiw-item--large fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/01-site-analysis.png" alt="Site analysis walk">
               <div class="hiw-overlay">
@@ -246,10 +225,10 @@
                 <span class="hiw-overlay-title">Site Analysis</span>
               </div>
             </div>
-            <p class="hiw-caption">We assess sun exposure, water access, soil conditions, and available footprint. Full layout recommendation included.</p>
+            <p class="hiw-caption">We assess sun exposure, water access, soil conditions, and available footprint.</p>
           </div>
 
-          <div class="hiw-item hiw-item--small fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/02-system-design .png" alt="System design blueprint">
               <div class="hiw-overlay">
@@ -257,10 +236,10 @@
                 <span class="hiw-overlay-title">System Design</span>
               </div>
             </div>
-            <p class="hiw-caption">Custom bed layout, irrigation zones, crop plan, and automation spec — delivered as a visual blueprint before anything is built.</p>
+            <p class="hiw-caption">Bed layout, irrigation zones, crop plan, and automation spec — a visual blueprint before anything is built.</p>
           </div>
 
-          <div class="hiw-item hiw-item--large fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/03-build-install .png" alt="Build and install day">
               <div class="hiw-overlay">
@@ -268,15 +247,10 @@
                 <span class="hiw-overlay-title">Build &amp; Install</span>
               </div>
             </div>
-            <p class="hiw-caption">Beds constructed, soil laid, drip network installed, smart controller connected. Two-day installation, zero mess left behind.</p>
+            <p class="hiw-caption">Beds built, soil laid, drip network and smart controller installed. Two days, zero mess left behind.</p>
           </div>
 
-        </div><!-- /.hiw-row -->
-
-        <!-- Row 2: steps 4–6 (alt layout) -->
-        <div class="hiw-row hiw-row--alt">
-
-          <div class="hiw-item hiw-item--large fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/04-initial-planting .png" alt="Initial planting">
               <div class="hiw-overlay">
@@ -284,10 +258,10 @@
                 <span class="hiw-overlay-title">Initial Planting</span>
               </div>
             </div>
-            <p class="hiw-caption">Seasonal alignment, succession planting schedule set, first crops in the ground. Your agronomist walks you through the plan.</p>
+            <p class="hiw-caption">First crops in the ground on a succession schedule, walked through with your agronomist.</p>
           </div>
 
-          <div class="hiw-item hiw-item--small fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/05-app-activation.png" alt="App activation on phone">
               <div class="hiw-overlay">
@@ -295,10 +269,10 @@
                 <span class="hiw-overlay-title">App Activation</span>
               </div>
             </div>
-            <p class="hiw-caption">The Harvest app connects to your sensors. Track moisture, yields, streak goals, and upcoming maintenance — all in real time.</p>
+            <p class="hiw-caption">The app connects to your sensors — moisture, yields, and upcoming maintenance in real time.</p>
           </div>
 
-          <div class="hiw-item hiw-item--large fade-up">
+          <div class="hiw-item fade-up">
             <div class="hiw-img-wrap">
               <img src="assets/06-ongoing-production .png" alt="Ongoing harvest production">
               <div class="hiw-overlay">
@@ -306,10 +280,10 @@
                 <span class="hiw-overlay-title">Ongoing Production</span>
               </div>
             </div>
-            <p class="hiw-caption">Weekly visits from your assigned horticulturalist. Watering automated. Your only job: harvest and eat.</p>
+            <p class="hiw-caption">Weekly visits from your horticulturalist. Seasonal replanting and soil management. Watering automated. Your only job: harvest and eat.</p>
           </div>
 
-        </div><!-- /.hiw-row -->
+        </div><!-- /.hiw-grid -->
 
       </div>
     </section>
@@ -323,6 +297,7 @@
         <!-- Section header -->
         <div class="app-head fade-up">
           <span class="eyebrow">The Harvest at Home App</span>
+          <span class="eyebrow eyebrow--soon">Coming soon</span>
           <h2 class="section-h2" id="app-h2">Grow streaks, not just vegetables.</h2>
           <p class="section-body">Track your beds, log harvests, earn milestones, and watch your garden's real-time vitals from your phone. Your garden is a living system — the app makes it feel like one.</p>
         </div>
@@ -362,9 +337,12 @@
     </section>
 
     <!-- =====================================================
-         YIELD
+         YIELD ("Output by the numbers")
+         TEMPORARILY HIDDEN — markup kept intact.
+         To restore: remove the `hidden` attribute below, and
+         un-comment the "YIELD" nav link in the header.
          ===================================================== -->
-    <section class="yield-section" id="yield" aria-labelledby="yield-h2">
+    <section class="yield-section" id="yield" aria-labelledby="yield-h2" hidden>
       <div class="yield-header fade-up">
         <span class="eyebrow">Output by the numbers</span>
         <h2 class="section-h2" id="yield-h2">What your backyard actually produces.</h2>
@@ -432,9 +410,12 @@
     </section>
 
     <!-- =====================================================
-         TESTIMONIALS
+         TESTIMONIALS ("What clients say")
+         TEMPORARILY HIDDEN — markup kept intact.
+         To restore: remove the `hidden` attribute below, and
+         un-comment the "Client Stories" link in the footer.
          ===================================================== -->
-    <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-h2">
+    <section class="testimonials-section" id="testimonials" aria-labelledby="testimonials-h2" hidden>
       <div class="container">
 
         <div class="testimonials-head fade-up">
@@ -686,7 +667,8 @@
             <li><a href="#difference">Our Approach</a></li>
             <li><a href="#how-it-works">The Agronomy Team</a></li>
             <li><a href="#app">The App</a></li>
-            <li><a href="#testimonials">Client Stories</a></li>
+            <!-- Hidden with the TESTIMONIALS section — restore together -->
+            <!-- <li><a href="#testimonials">Client Stories</a></li> -->
           </ul>
         </div>
         <div class="footer-col">
@@ -741,13 +723,13 @@
             <div class="survey-step" data-step="1">
               <h2 class="survey-q" id="survey-title">What's your ZIP code?</h2>
               <div class="survey-input-wrap">
-                <input type="text" class="survey-text-input" id="s-zip" placeholder="e.g. 78704" inputmode="numeric" maxlength="5" autocomplete="postal-code" required />
+                <input type="text" class="survey-text-input" id="s-zip" data-key="zip" placeholder="e.g. 78704" inputmode="numeric" maxlength="5" autocomplete="postal-code" required />
               </div>
             </div>
 
             <div class="survey-step" data-step="2">
               <h2 class="survey-q">What best describes your property?</h2>
-              <div class="survey-options" role="radiogroup">
+              <div class="survey-options" role="radiogroup" data-key="property">
                 <label class="survey-option"><input type="radio" name="property" value="house"><span>House with a yard</span></label>
                 <label class="survey-option"><input type="radio" name="property" value="townhome"><span>Townhome with outdoor space</span></label>
                 <label class="survey-option"><input type="radio" name="property" value="condo"><span>Condo with a patio or balcony</span></label>
@@ -758,7 +740,7 @@
 
             <div class="survey-step" data-step="3">
               <h2 class="survey-q">How much direct sun does your garden area get each day?</h2>
-              <div class="survey-options" role="radiogroup">
+              <div class="survey-options" role="radiogroup" data-key="sun">
                 <label class="survey-option"><input type="radio" name="sun" value="6+"><span>6+ hours</span></label>
                 <label class="survey-option"><input type="radio" name="sun" value="3-6"><span>3–6 hours <span class="survey-option-sub">(Partial sun)</span></span></label>
                 <label class="survey-option"><input type="radio" name="sun" value="lt3"><span>Less than 3 hours <span class="survey-option-sub">(Mostly shade)</span></span></label>
@@ -768,7 +750,7 @@
 
             <div class="survey-step" data-step="4">
               <h2 class="survey-q">Which best describes your primary goal?</h2>
-              <div class="survey-options" role="radiogroup">
+              <div class="survey-options" role="radiogroup" data-key="goal">
                 <label class="survey-option"><input type="radio" name="goal" value="cleaner"><span>Grow cleaner / healthier food</span></label>
                 <label class="survey-option"><input type="radio" name="goal" value="grocery"><span>Cut down grocery bill</span></label>
                 <label class="survey-option"><input type="radio" name="goal" value="beautiful"><span>Have a beautiful garden</span></label>
@@ -779,7 +761,7 @@
 
             <div class="survey-step" data-step="5">
               <h2 class="survey-q">How much food would you like your garden to produce?</h2>
-              <div class="survey-options" role="radiogroup">
+              <div class="survey-options" role="radiogroup" data-key="production">
                 <label class="survey-option"><input type="radio" name="production" value="herbs"><span>Fresh herbs and a few favorites</span></label>
                 <label class="survey-option"><input type="radio" name="production" value="weekly"><span>Weekly harvests for our household</span></label>
                 <label class="survey-option"><input type="radio" name="production" value="most"><span>Most of our seasonal produce</span></label>
@@ -789,7 +771,7 @@
 
             <div class="survey-step" data-step="6">
               <h2 class="survey-q">When are you hoping to install your garden?</h2>
-              <div class="survey-options" role="radiogroup">
+              <div class="survey-options" role="radiogroup" data-key="timeline">
                 <label class="survey-option"><input type="radio" name="timeline" value="now"><span>Ready now</span></label>
                 <label class="survey-option"><input type="radio" name="timeline" value="3mo"><span>Within 3 months</span></label>
                 <label class="survey-option"><input type="radio" name="timeline" value="3-12mo"><span>3–12 months</span></label>
@@ -800,7 +782,7 @@
             <div class="survey-step" data-step="7">
               <h2 class="survey-q">Anything else we should know?</h2>
               <div class="survey-input-wrap">
-                <textarea class="survey-textarea" id="s-notes" placeholder="Share any details about your space, goals, or questions..."></textarea>
+                <textarea class="survey-textarea" id="s-notes" data-key="notes" placeholder="Share any details about your space, goals, or questions..."></textarea>
               </div>
             </div>
 
@@ -809,20 +791,22 @@
               <div class="survey-contact-fields">
                 <div class="survey-field-group">
                   <label class="survey-field-label" for="s-name">Name</label>
-                  <input type="text" class="survey-text-input" id="s-name" placeholder="Jane Smith" autocomplete="name" required />
+                  <input type="text" class="survey-text-input" id="s-name" data-key="name" data-question="Name" placeholder="Jane Smith" autocomplete="name" required />
                 </div>
                 <div class="survey-field-group">
                   <label class="survey-field-label" for="s-email">Email</label>
-                  <input type="email" class="survey-text-input" id="s-email" placeholder="jane@example.com" autocomplete="email" required />
+                  <input type="email" class="survey-text-input" id="s-email" data-key="email" data-question="Email" placeholder="jane@example.com" autocomplete="email" required />
                 </div>
                 <div class="survey-field-group">
                   <label class="survey-field-label" for="s-phone">Phone</label>
-                  <input type="tel" class="survey-text-input" id="s-phone" placeholder="+1 (555) 000-0000" autocomplete="tel" required />
+                  <input type="tel" class="survey-text-input" id="s-phone" data-key="phone" data-question="Phone" placeholder="+1 (555) 000-0000" autocomplete="tel" required />
                 </div>
               </div>
             </div>
 
-            <div class="survey-step" data-step="9">
+            <!-- Success screen. data-success marks the end of the questions;
+                 add new question steps ABOVE this one. -->
+            <div class="survey-step" data-step="9" data-success>
               <div class="survey-success">
                 <div class="survey-success-icon">
                   <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 11l5 5L19 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -851,6 +835,7 @@
     </div><!-- /.survey-inner -->
   </div><!-- /#survey-modal -->
 
-  <script src="js/main.js"></script>
+  <script src="js/config.js?v=2"></script>
+  <script src="js/main.js?v=2"></script>
 </body>
 </html>

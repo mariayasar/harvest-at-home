@@ -305,6 +305,93 @@ function initYieldZip() {
   });
 }
 
+/* ----- Survey submission -----
+   Answers are read straight off the DOM, so editing, adding or removing a
+   question in index.html needs no changes here. Each field's column in the
+   sheet comes from its data-key; keep the key stable when you reword a
+   question and the old column (and its history) is reused. */
+
+function normalizeSpace(str) {
+  return String(str || '').replace(/\s+/g, ' ').trim();
+}
+
+function optionLabel(input) {
+  const label = input.closest('label');
+  return normalizeSpace(label ? label.textContent : input.value);
+}
+
+function collectSurveyAnswers(modal) {
+  const answers = [];
+  const seen = new Set();
+
+  modal.querySelectorAll('.survey-step[data-step]').forEach(step => {
+    if (step.hasAttribute('data-success')) return;
+    const question = normalizeSpace(step.querySelector('.survey-q')?.textContent);
+
+    // Radio / checkbox groups — answer is the visible option text
+    step.querySelectorAll('.survey-options').forEach(group => {
+      const inputs = Array.from(group.querySelectorAll('input[type=radio], input[type=checkbox]'));
+      if (!inputs.length) return;
+      const key = group.dataset.key || inputs[0].name || '';
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      answers.push({
+        key,
+        question: group.dataset.question || question,
+        answer: inputs.filter(i => i.checked).map(optionLabel).join(', ')
+      });
+    });
+
+    // Free-text fields
+    step.querySelectorAll('input:not([type=radio]):not([type=checkbox]), textarea, select').forEach(el => {
+      const key = el.dataset.key || el.id.replace(/^s-/, '') || el.name || '';
+      if (!key || seen.has(key)) return;
+      seen.add(key);
+      const fieldLabel = el.id
+        ? normalizeSpace(step.querySelector(`label[for="${el.id}"]`)?.textContent)
+        : '';
+      answers.push({
+        key,
+        question: el.dataset.question || fieldLabel || question,
+        answer: (el.value || '').trim()
+      });
+    });
+  });
+
+  return answers;
+}
+
+async function sendSurveyResponse(answers) {
+  const endpoint = normalizeSpace(window.HARVEST_CONFIG && window.HARVEST_CONFIG.surveyEndpoint);
+  const payload = {
+    meta: { pageUrl: location.href, userAgent: navigator.userAgent },
+    answers
+  };
+
+  if (!endpoint) {
+    console.warn('[Harvest] No surveyEndpoint set in js/config.js — response not sent.', payload);
+    return;
+  }
+
+  const body = JSON.stringify(payload);
+  // text/plain keeps this a "simple" request so the browser skips the CORS
+  // preflight, which Apps Script web apps can't answer.
+  const headers = { 'Content-Type': 'text/plain;charset=utf-8' };
+
+  try {
+    const res = await fetch(endpoint, { method: 'POST', headers, body, redirect: 'follow' });
+    if (!res.ok) throw new Error(`Server responded ${res.status}`);
+    const data = await res.json().catch(() => null);
+    if (data && data.ok === false) throw new Error(data.error || 'Server rejected the submission');
+  } catch (err) {
+    if (!(err instanceof TypeError)) throw err;
+    // Network- or CORS-level failure: resend opaquely. The request still
+    // reaches Apps Script, we just can't read the reply. If the network is
+    // genuinely down this throws too, and the user sees the error message.
+    await fetch(endpoint, { method: 'POST', mode: 'no-cors', headers, body });
+  }
+}
+
 /* ----- Survey Modal ----- */
 function initSurvey() {
   const modal     = document.getElementById('survey-modal');
@@ -317,8 +404,14 @@ function initSurvey() {
   const errorMsg  = document.getElementById('survey-error-msg');
   if (!modal) return;
 
-  const TOTAL_STEPS = 8; // step 9 is success screen
+  // Derived from the DOM so adding or removing a question step just works.
+  // Steps must stay numbered consecutively from 1, with data-success last.
+  const allSteps    = Array.from(modal.querySelectorAll('.survey-step[data-step]'));
+  const successStep = allSteps.find(s => s.hasAttribute('data-success')) || allSteps[allSteps.length - 1];
+  const TOTAL_STEPS = allSteps.filter(s => !s.hasAttribute('data-success')).length;
+  const SUCCESS_STEP = parseInt(successStep?.dataset.step, 10) || TOTAL_STEPS + 1;
   let current = 1;
+  let submitting = false;
 
   function getStep(n) {
     return modal.querySelector(`.survey-step[data-step="${n}"]`);
@@ -478,11 +571,32 @@ function initSurvey() {
     if (current < TOTAL_STEPS) {
       showStep(current + 1);
     } else if (current === TOTAL_STEPS) {
-      // Submit: show success screen (step 9)
-      showStep(9);
+      submitSurvey();
     } else {
       // Success screen: close modal
       closeModal();
+    }
+  }
+
+  async function submitSurvey() {
+    if (submitting) return;
+    submitting = true;
+    const label = nextBtn ? nextBtn.textContent : '';
+    if (nextBtn) {
+      nextBtn.disabled = true;
+      nextBtn.textContent = 'Sending…';
+    }
+    try {
+      await sendSurveyResponse(collectSurveyAnswers(modal));
+      clearError();
+      showStep(SUCCESS_STEP); // showStep resets the button label
+    } catch (err) {
+      console.error('[Harvest] Survey submission failed:', err);
+      showError('Something went wrong sending your answers. Please try again.');
+      if (nextBtn) nextBtn.textContent = label;
+    } finally {
+      submitting = false;
+      if (nextBtn) nextBtn.disabled = false;
     }
   }
 
