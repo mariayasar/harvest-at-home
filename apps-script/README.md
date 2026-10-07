@@ -47,27 +47,33 @@ timestamp) and emailed to **m.dubrovskaya@gmail.com**.
 
 ## How the sheet handles question changes
 
-Each field has a stable `data-key` in `index.html` (`zip`, `property`, `sun`,
-`goal`, `production`, `timeline`, `notes`, `name`, `email`, `phone`). That key —
-not the question wording — is the column header.
+**Nothing is ever lost.** The script only ever *appends* columns — it never
+renames, reorders or deletes one, so every answer stays in the cell it was
+written to.
 
-- **Reword a question** → same key, so answers keep landing in the same column
-  and nothing is lost. The `Questions` tab updates to show the new wording.
-- **Add a question** → new key, so a new column is appended at the far right.
-  Older rows simply have a blank cell there.
-- **Remove a question** → the column and all its historical answers stay put;
-  new rows just leave it blank.
+A column is identified by the pair **(`data-key`, exact question wording)**:
 
-Columns are never reordered or deleted by the script, so anything you've added
-by hand to the right of the data (notes, formulas) is safest kept on a separate
-tab.
+- **Add a question** → a new column appears at the far right. Older rows are
+  simply blank there.
+- **Edit / reword a question** → a **new column** is created, named
+  `key (2)`, then `key (3)`, and so on. The old column and all its historical
+  answers stay exactly as they were; new responses land in the new column.
+- **Remove a question** → the column and its history stay put; new rows just
+  leave it blank.
+
+The `Questions` tab is the legend that ties it together — it lists every
+wording ever used and which column holds its answers.
+
+> Because *any* wording change makes a new column, a typo fix will also split
+> the data. If you want an edit to keep feeding the original column, restore
+> the exact previous wording — or merge the two columns by hand afterwards.
 
 ### Tabs the script maintains
 
 | Tab | Contents |
 | --- | --- |
-| `Responses` | One row per submission: `Timestamp`, `Page URL`, `User Agent`, then one column per question key. |
-| `Questions` | `Key`, current `Question` wording, first seen, last seen — the legend for the `Responses` headers. |
+| `Responses` | One row per submission: `Timestamp`, `Page URL`, `User Agent`, then one column per question version. |
+| `Questions` | `Key`, `Question` wording, the `Column` it writes to, first seen, last seen. |
 | `Errors` | Only appears if a submission fails; holds the raw payload so nothing is lost. |
 
 ## Editing the survey in `index.html`
@@ -78,7 +84,7 @@ Questions live in the `#survey-modal` block. To add one, copy an existing
 1. Give it the next `data-step` number, and renumber the success step so the
    numbering stays consecutive.
 2. Put a unique `data-key` on the `.survey-options` group (multiple choice) or
-   on the `input`/`textarea` (free text). That key becomes the sheet column.
+   on the `input`/`textarea` (free text). That key names the sheet column.
 3. Add `required` to a text input if it must be filled in. Multiple-choice
    steps are required automatically.
 
