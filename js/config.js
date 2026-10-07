@@ -9,5 +9,5 @@
    (answers are logged to the browser console instead).
    ========================================================= */
 window.HARVEST_CONFIG = {
-  surveyEndpoint: ''
+  surveyEndpoint: 'https://script.google.com/macros/s/AKfycby5zSSj0x-K7bP4QRnDXYJQbtvsNRY6E0Y6LhcBgB7tnjF7-teuxtuCEdkDHsqhFgpffg/exec'
 };

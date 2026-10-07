@@ -15,21 +15,18 @@ timestamp) and emailed to **m.dubrovskaya@gmail.com**.
 3. **Paste the code.** Delete whatever is in `Code.gs` and paste the full
    contents of `apps-script/Code.gs` from this repo. Save (⌘S).
 
-4. **Authorize + smoke test.** In the toolbar's function dropdown pick
-   `testSubmission`, click **Run**, and approve the permission prompts
-   (Google will warn the app is unverified — choose *Advanced → Go to
-   \<project name\> (unsafe)*; it's your own script). A test row should appear in
-   the sheet and a test email in your inbox. Delete the test row afterwards.
-
-5. **Deploy as a Web App.** **Deploy → New deployment → ⚙︎ → Web app**:
+4. **Deploy as a Web App.** **Deploy → New deployment → ⚙︎ → Web app**:
    - Description: `survey endpoint`
    - Execute as: **Me**
    - Who has access: **Anyone**  ← required; "Anyone with Google account" will
      block visitors who aren't signed in.
 
-   Click **Deploy** and copy the **Web app URL** (ends in `/exec`).
+   Click **Deploy**, then approve the authorization prompts. Google will warn
+   the app is unverified — it's your own script, so choose *Advanced → Go to
+   \<project name\> (unsafe) → Allow*. Copy the **Web app URL** (ends in
+   `/exec`).
 
-6. **Paste the URL into the site.** Open `js/config.js` and set:
+5. **Paste the URL into the site.** Open `js/config.js` and set:
 
    ```js
    window.HARVEST_CONFIG = {
@@ -37,8 +34,46 @@ timestamp) and emailed to **m.dubrovskaya@gmail.com**.
    };
    ```
 
+6. **Smoke-test the endpoint.** From a terminal:
+
+   ```sh
+   curl -sL "<EXEC_URL>"
+   # {"ok":true,"service":"harvest-survey","time":"..."}
+   ```
+
+   If that returns HTML mentioning "Sign in", the access setting is wrong —
+   redeploy with **Anyone**. Then post a fake submission.
+
+   Apps Script answers a POST with a 302 to a one-shot `googleusercontent.com`
+   URL. `curl -L` turns that into a GET that Google rejects ("Sorry, unable to
+   open the file at this time"), so follow the redirect in two steps — note the
+   **script still ran** either way, so a failed-looking `-L` attempt has
+   already written its row:
+
+   ```sh
+   URL="<EXEC_URL>"
+   BODY='{"meta":{"pageUrl":"curl-test"},"answers":[
+          {"key":"zip","question":"ZIP?","answer":"78704"},
+          {"key":"name","question":"Name","answer":"Curl Test"}]}'
+   LOC=$(curl -s -o /dev/null -D - -X POST "$URL" \
+           -H 'Content-Type: text/plain;charset=utf-8' -d "$BODY" \
+         | awk 'tolower($1)=="location:"{print $2}' | tr -d '\r')
+   curl -s "$LOC"
+   # {"ok":true,"row":2}
+   ```
+
+   A row should appear in `Responses` and an email in your inbox. Delete the
+   test row afterwards.
+
+   Browsers are unaffected by this: `fetch` follows the redirect correctly, and
+   the 302 carries `access-control-allow-origin: *`.
+
 7. **Test from the site.** Open the site, complete the survey, and confirm a
    new row and a new email arrive.
+
+> There is also a `testSubmission()` function at the bottom of `Code.gs` you
+> can run from the editor (function dropdown → **Run**) if you'd rather check
+> the script before deploying, or to debug later without touching the site.
 
 > **Redeploying after editing the script:** use **Deploy → Manage deployments →
 > ✏️ → Version: New version → Deploy**. That keeps the same URL. Creating a
