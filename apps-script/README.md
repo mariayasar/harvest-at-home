@@ -71,6 +71,20 @@ timestamp) and emailed to **m.dubrovskaya@gmail.com**.
 7. **Test from the site.** Open the site, complete the survey, and confirm a
    new row and a new email arrive.
 
+> ⚠️ **After editing `js/config.js`, hard-reload the page (⇧⌘R).** A normal
+> reload can keep serving the previously cached `config.js`, and a stale copy
+> with an empty `surveyEndpoint` fails *silently* — the success screen still
+> appears, but nothing is sent. The console says
+> `[Harvest] No surveyEndpoint set in js/config.js` when this happens.
+>
+> To check which copy the page is actually running, open the console and
+> evaluate `window.HARVEST_CONFIG.surveyEndpoint`.
+>
+> On the deployed site this can't happen: `vercel.json` sets
+> `Cache-Control: no-cache`, so every asset is revalidated before use. The
+> caveat applies only to local `python -m http.server` testing, which sends no
+> cache headers at all.
+
 > There is also a `testSubmission()` function at the bottom of `Code.gs` you
 > can run from the editor (function dropdown → **Run**) if you'd rather check
 > the script before deploying, or to debug later without touching the site.
