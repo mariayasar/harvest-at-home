@@ -80,10 +80,16 @@ timestamp) and emailed to **m.dubrovskaya@gmail.com**.
 > To check which copy the page is actually running, open the console and
 > evaluate `window.HARVEST_CONFIG.surveyEndpoint`.
 >
-> On the deployed site this can't happen: `vercel.json` sets
-> `Cache-Control: no-cache`, so every asset is revalidated before use. The
-> caveat applies only to local `python -m http.server` testing, which sends no
-> cache headers at all.
+> **On the live site** (GitHub Pages, <https://mariayasar.github.io/harvest-at-home/>)
+> this self-heals: Pages serves `Cache-Control: max-age=600`, so a stale asset
+> is at most 10 minutes old. Pages cannot send custom headers, so the `?v=N`
+> query strings on the `<link>`/`<script>` tags in `index.html` are the only
+> way to force an immediate refresh — **bump them whenever you edit
+> `config.js`, `main.js`, or `styles.css`** and want the change picked up right
+> away rather than within 10 minutes.
+>
+> Locally it does **not** self-heal: `python -m http.server` sends no cache
+> headers at all, so a stale copy can persist indefinitely. Hard-reload.
 
 > There is also a `testSubmission()` function at the bottom of `Code.gs` you
 > can run from the editor (function dropdown → **Run**) if you'd rather check
