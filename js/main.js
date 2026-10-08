@@ -59,17 +59,61 @@ function initHeroZip() {
 
 /* ----- Contact Form Submit Handler ----- */
 // Isolated so it can be swapped for Typeform/Tally redirect
-function handleContactFormSubmit(e) {
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+async function handleContactFormSubmit(e) {
   e.preventDefault();
-  const form = e.currentTarget;
-  const zipInput = form.querySelector('#contact-zip');
-  const result = document.getElementById('contact-zip-result');
-  if (!zipInput || !result) return;
+  const form   = e.currentTarget;
+  const name   = form.querySelector('#contact-name');
+  const email  = form.querySelector('#contact-email');
+  const message= form.querySelector('#contact-message');
+  const button = form.querySelector('#contact-submit');
+  const status = document.getElementById('contact-status');
+  if (!name || !email || !message || !status) return;
 
-  applyZipResult(result, zipInput.value.trim());
+  const showStatus = (msg, kind) => {
+    status.textContent = msg;
+    status.className = `form-status visible ${kind}`;
+  };
 
-  // TODO: swap for Typeform/Tally redirect or backend POST
-  // Example: window.location.href = 'https://form.typeform.com/to/XXXXX?zip=' + encodeURIComponent(zipInput.value);
+  // Validate
+  [name, email, message].forEach(el => el.classList.remove('form-input-error'));
+  let invalid = null;
+  if (!message.value.trim()) invalid = [message, 'Please write a message.'];
+  if (!EMAIL_PATTERN.test(email.value.trim())) invalid = [email, 'Please enter a valid email address.'];
+  if (!name.value.trim()) invalid = [name, 'Please enter your name.'];
+  if (invalid) {
+    invalid[0].classList.add('form-input-error');
+    invalid[0].focus();
+    showStatus(invalid[1], 'error');
+    return;
+  }
+
+  const original = button ? button.textContent : '';
+  if (button) {
+    button.disabled = true;
+    button.textContent = 'Sending…';
+  }
+  status.className = 'form-status';
+
+  try {
+    await postToEndpoint({
+      form: 'contact',
+      name: name.value.trim(),
+      email: email.value.trim(),
+      message: message.value.trim()
+    });
+    form.reset();
+    showStatus('Thanks — your message is on its way. We\'ll reply within one business day.', 'success');
+  } catch (err) {
+    console.error('[Harvest] Contact form failed:', err);
+    showStatus('Sorry, your message didn\'t send. Please try again, or email us directly.', 'error');
+  } finally {
+    if (button) {
+      button.disabled = false;
+      button.textContent = original;
+    }
+  }
 }
 
 function initContactForm() {
@@ -361,15 +405,18 @@ function collectSurveyAnswers(modal) {
   return answers;
 }
 
-async function sendSurveyResponse(answers) {
+/* Shared transport for everything we POST to the Apps Script web app —
+   the survey and the contact form both go through here. */
+async function postToEndpoint(payload) {
   const endpoint = normalizeSpace(window.HARVEST_CONFIG && window.HARVEST_CONFIG.surveyEndpoint);
-  const payload = {
-    meta: { pageUrl: location.href, userAgent: navigator.userAgent },
-    answers
-  };
+
+  payload.meta = Object.assign(
+    { pageUrl: location.href, userAgent: navigator.userAgent },
+    payload.meta
+  );
 
   if (!endpoint) {
-    console.warn('[Harvest] No surveyEndpoint set in js/config.js — response not sent.', payload);
+    console.warn('[Harvest] No surveyEndpoint set in js/config.js — nothing sent.', payload);
     return;
   }
 
@@ -390,6 +437,10 @@ async function sendSurveyResponse(answers) {
     // genuinely down this throws too, and the user sees the error message.
     await fetch(endpoint, { method: 'POST', mode: 'no-cors', headers, body });
   }
+}
+
+function sendSurveyResponse(answers) {
+  return postToEndpoint({ form: 'survey', answers });
 }
 
 /* ----- Survey Modal ----- */

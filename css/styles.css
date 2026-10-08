@@ -1788,6 +1788,37 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .form-submit:hover { opacity: 0.85; transform: translateY(-1px); }
 .form-submit:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
+.form-submit[disabled] { opacity: 0.6; cursor: default; transform: none; }
+
+/* Message box — inherits .form-input, just needs sizing */
+.form-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.55;
+  font-family: inherit;
+}
+
+/* Contact form result message */
+.form-status {
+  border-radius: 8px;
+  padding: 0.85rem 1.2rem;
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  display: none;
+}
+.form-status.visible { display: block; }
+.form-status.success {
+  background: rgba(126,240,168,0.15);
+  border: 1px solid rgba(126,240,168,0.4);
+  color: var(--ink);
+}
+.form-status.error {
+  background: rgba(184,148,42,0.1);
+  border: 1px solid rgba(184,148,42,0.3);
+  color: var(--ink);
+}
+.form-input-error { border-color: rgba(184,148,42,0.8) !important; }
 .form-zip-result {
   border-radius: 8px;
   padding: 0.85rem 1.2rem;

@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" />
-  <link rel="stylesheet" href="css/styles.css?v=3" />
+  <link rel="stylesheet" href="css/styles.css?v=4" />
 </head>
 <body>
 
@@ -580,54 +580,35 @@
 
           <!-- Left: heading -->
           <div class="contact-left fade-up">
-            <span class="eyebrow">Begin Your Harvest at Home</span>
-            <h2 class="section-h2 contact-h2" id="contact-h2">Own the system <em>that feeds you.</em></h2>
-            <p class="section-body contact-body">We take on a limited number of new installations per season. Request a site visit and receive a custom layout design within 5 business days.</p>
+            <span class="eyebrow">Get in touch</span>
+            <h2 class="section-h2 contact-h2" id="contact-h2">Questions? <em>Send us a note.</em></h2>
+            <p class="section-body contact-body">Tell us what you're thinking about and we'll get back to you within one business day.</p>
           </div>
 
           <!-- Right: form -->
           <div class="contact-right fade-up">
             <div class="contact-form-wrap">
-              <form id="contact-form" class="contact-form" novalidate aria-label="Request a site visit">
+              <form id="contact-form" class="contact-form" novalidate aria-label="Send us a message">
 
-                <div class="form-row">
-                  <div class="form-group">
-                    <label class="form-label" for="contact-first">First name</label>
-                    <input class="form-input" id="contact-first" type="text" name="first_name" placeholder="Jane" autocomplete="given-name" required />
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" for="contact-last">Last name</label>
-                    <input class="form-input" id="contact-last" type="text" name="last_name" placeholder="Smith" autocomplete="family-name" required />
-                  </div>
+                <div class="form-group">
+                  <label class="form-label" for="contact-name">Name</label>
+                  <input class="form-input" id="contact-name" type="text" name="name" placeholder="Jane Smith" autocomplete="name" required />
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="contact-email">Email address</label>
+                  <label class="form-label" for="contact-email">Email</label>
                   <input class="form-input" id="contact-email" type="email" name="email" placeholder="jane@example.com" autocomplete="email" required />
                 </div>
 
                 <div class="form-group">
-                  <label class="form-label" for="contact-zip">Zip code</label>
-                  <input
-                    class="form-input"
-                    id="contact-zip"
-                    type="text"
-                    name="zip"
-                    placeholder="78704"
-                    inputmode="numeric"
-                    maxlength="5"
-                    pattern="\d{5}"
-                    autocomplete="postal-code"
-                    required
-                    aria-describedby="contact-zip-result"
-                  />
+                  <label class="form-label" for="contact-message">Message</label>
+                  <textarea class="form-input form-textarea" id="contact-message" name="message" rows="5" placeholder="What would you like to know?" required></textarea>
                 </div>
 
-                <button type="submit" class="form-submit">Request a Site Visit →</button>
-                <div id="contact-zip-result" class="form-zip-result" role="status" aria-live="polite"></div>
+                <button type="submit" class="form-submit" id="contact-submit">Send message →</button>
+                <div id="contact-status" class="form-status" role="status" aria-live="polite"></div>
 
               </form>
-              <p class="form-note">Austin metro area currently served · Expanding to Bay Area Q3 2025</p>
             </div>
           </div>
 
@@ -842,7 +823,7 @@
     </div><!-- /.survey-inner -->
   </div><!-- /#survey-modal -->
 
-  <script src="js/config.js?v=3"></script>
-  <script src="js/main.js?v=3"></script>
+  <script src="js/config.js?v=4"></script>
+  <script src="js/main.js?v=4"></script>
 </body>
 </html>
