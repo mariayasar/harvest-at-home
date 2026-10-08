@@ -1693,18 +1693,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 .contact-inner {
   border-radius: 0;
 }
+/* Single centred column — three fields don't need a two-up split */
 .contact-layout {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 2.5rem;
   padding: 0;
 }
 .contact-left {
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
   gap: 0;
-  max-width: 640px;
+  max-width: 540px;
 }
 .contact-left .eyebrow {
   display: inline-block;
@@ -1716,27 +1719,31 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   letter-spacing: 0.12em;
   margin-bottom: 1.25rem;
 }
+/* balance keeps the two lines even instead of orphaning "a note." */
+.contact-h2 {
+  max-width: 20ch;
+  text-wrap: balance;
+}
 .contact-body {
   color: var(--mid);
-  margin-top: 1.5rem;
-  max-width: none;
+  margin-top: 1rem;
+  max-width: 40ch;
+  text-wrap: balance;
 }
 .contact-right {
   position: relative;
+  width: 100%;
+  max-width: 560px;
 }
 .contact-form-wrap {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   background: var(--cream);
-  border-radius: 0;
-  padding: 5rem;
-  min-height: 720px;
+  border-radius: 20px;
+  padding: 2.75rem;
 }
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.25rem;
 }
 .form-row {
   display: grid;
@@ -1759,12 +1766,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   background: #fff;
   border: 1px solid var(--input-border);
   border-radius: var(--radius-pill);
-  padding: 0.75rem 1.5rem;
+  padding: 0.9rem 1.4rem;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.95rem;
   color: var(--ink);
   outline: none;
-  min-height: 72px;
+  min-height: 56px;
   width: 100%;
   transition: border-color 0.2s, box-shadow 0.2s;
 }
@@ -1781,18 +1788,21 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   font-family: 'DM Sans', sans-serif;
   font-weight: 500;
   font-size: 0.95rem;
-  min-height: 64px;
+  min-height: 56px;
   width: 100%;
-  margin-top: 0.5rem;
+  margin-top: 0.25rem;
   transition: opacity 0.2s, transform 0.15s;
 }
 .form-submit:hover { opacity: 0.85; transform: translateY(-1px); }
 .form-submit:focus-visible { outline: 2px solid var(--mint); outline-offset: 3px; }
 .form-submit[disabled] { opacity: 0.6; cursor: default; transform: none; }
 
-/* Message box — inherits .form-input, just needs sizing */
+/* Message box — inherits .form-input; needs a softer corner than the
+   pill radius, which looks wrong on a tall multi-line box. */
 .form-textarea {
-  min-height: 140px;
+  min-height: 132px;
+  border-radius: 18px;
+  padding: 1rem 1.4rem;
   resize: vertical;
   line-height: 1.55;
   font-family: inherit;
@@ -1800,11 +1810,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
 /* Contact form result message */
 .form-status {
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 0.85rem 1.2rem;
-  margin-top: 1rem;
+  margin-top: 0.25rem;
   font-size: 0.85rem;
   line-height: 1.55;
+  text-align: center;
   display: none;
 }
 .form-status.visible { display: block; }
@@ -2107,9 +2118,8 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
   /* Contact */
   .contact-section { padding: 4rem 24px; }
-  .contact-layout { grid-template-columns: 1fr; gap: 3rem; }
-  .contact-right { width: 100%; }
-  .contact-form-wrap { padding: 2.5rem; min-height: auto; }
+  .contact-layout { gap: 2rem; }
+  .contact-form-wrap { padding: 2.25rem; }
 
   /* Footer */
   .footer-main { grid-template-columns: 1fr; padding: 3.5rem 24px; }
@@ -2153,9 +2163,9 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 
   /* Contact */
   .contact-section { padding: 3rem 16px; }
-  .contact-form-wrap { padding: 2rem 1.5rem; }
-  .form-row { grid-template-columns: 1fr; }
-  .form-input { min-height: 56px; }
+  .contact-form-wrap { padding: 1.75rem 1.25rem; }
+  .contact-h2 { max-width: none; }
+  .form-input { min-height: 52px; }
   .form-submit { min-height: 52px; }
 
   /* Footer */
