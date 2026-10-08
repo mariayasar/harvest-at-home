@@ -28,7 +28,8 @@
         <!-- Center nav links -->
         <ul class="nav-links" role="list">
           <li><a href="#how-it-works">HOW IT WORKS</a></li>
-          <li><a href="#tiers">SYSTEMS</a></li>
+          <!-- Hidden with the TIERS section — restore together -->
+          <!-- <li><a href="#tiers">SYSTEMS</a></li> -->
           <li><a href="#app">THE APP</a></li>
           <!-- Hidden with the YIELD section — restore together -->
           <!-- <li><a href="#yield">YIELD</a></li> -->
@@ -484,9 +485,13 @@
     </section>
 
     <!-- =====================================================
-         TIERS (Pricing)
+         TIERS / "Service Systems" (Pricing)
+         TEMPORARILY HIDDEN — pricing isn't finalised. Markup kept intact.
+         To restore: remove the `hidden` attribute below, and un-comment
+         the "SYSTEMS" nav link in the header and the "Systems" column
+         in the footer.
          ===================================================== -->
-    <section class="tiers-section" id="tiers" aria-labelledby="tiers-h2">
+    <section class="tiers-section" id="tiers" aria-labelledby="tiers-h2" hidden>
       <div class="container">
         <div class="tiers-header fade-up">
           <span class="eyebrow">Service Systems</span>
@@ -652,7 +657,9 @@
 
       <!-- Right: nav columns -->
       <div class="footer-nav">
-        <div class="footer-col">
+        <!-- Hidden with the TIERS section — every link here points at it.
+             Restore together. -->
+        <div class="footer-col" hidden>
           <h4 class="footer-col-title">Systems</h4>
           <ul role="list">
             <li><a href="#tiers">The Install</a></li>
