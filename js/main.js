@@ -2,63 +2,14 @@
    Harvest at Home — Main JS
    ========================================================= */
 
-/* ----- ZIP Logic (shared) ----- */
+/* ----- ZIP Logic (shared) -----
+   The hero no longer checks eligibility inline — its pill opens the survey,
+   whose first question is the ZIP. Eligibility is handled by a human reading
+   the response, so the in-area/waitlist copy and its helpers are gone.
+   ZIP_PATTERN is still used by the survey and the yield estimator. */
 const ZIP_PATTERN = /^\d{5}$/;
-const AUSTIN_PATTERN = /^787\d{2}$/;
-
-const ZIP_STRINGS = {
-  inArea: '<strong>You\'re in our service area.</strong> We\'ll reach out within 5 business days with your custom layout design.',
-  waitlist: '<strong>Not in your area yet.</strong> You\'re on the waitlist — we\'ve logged your zip code, and it helps decide where we expand next.',
-  invalid: 'Enter a 5-digit zip code to request your site visit.'
-};
-
-function validateZip(zip) {
-  if (!ZIP_PATTERN.test(zip)) return 'invalid';
-  if (AUSTIN_PATTERN.test(zip)) return 'in-area';
-  return 'waitlist';
-}
-
-// Stub: log out-of-area ZIP (endpoint TBD)
-function logOutOfAreaZip(zip) {
-  // TODO: POST to endpoint/sheet when confirmed
-  console.log('[Harvest] Out-of-area ZIP logged:', zip);
-}
-
-function applyZipResult(resultEl, zip) {
-  const state = validateZip(zip);
-  // Preserve the element's base class (hero-zip-result or form-zip-result)
-  const base = resultEl.id === 'contact-zip-result' ? 'form-zip-result' : 'hero-zip-result';
-  resultEl.className = `${base} visible ${state}`;
-  resultEl.innerHTML = ZIP_STRINGS[state] || ZIP_STRINGS.invalid;
-
-  if (state === 'waitlist') {
-    logOutOfAreaZip(zip);
-  }
-}
-
-/* ----- Hero ZIP Pill ----- */
-function initHeroZip() {
-  const form = document.getElementById('hero-zip-form');
-  const input = document.getElementById('hero-zip-input');
-  const result = document.getElementById('hero-zip-result');
-  if (!form || !input || !result) return;
-
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    applyZipResult(result, input.value.trim());
-  });
-
-  // Allow enter key
-  input.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') {
-      e.preventDefault();
-      applyZipResult(result, input.value.trim());
-    }
-  });
-}
 
 /* ----- Contact Form Submit Handler ----- */
-// Isolated so it can be swapped for Typeform/Tally redirect
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 /* ----- Footer newsletter signup ----- */
@@ -798,7 +749,6 @@ document.addEventListener('DOMContentLoaded', () => {
   initMarquee();
   initStagger();
   initScrollAnimations();
-  initHeroZip();
   initContactForm();
   initFooterSubscribe();
   initNav();
