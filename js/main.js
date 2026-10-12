@@ -265,6 +265,15 @@ const YIELD_DATA = {
     stats: ['10–20', '600+', '52', '1–2'],
     note: 'Year-round growing climate with 300+ sun days. Optimal conditions for continuous production.'
   },
+  bayarea: {
+    // TODO: these are the conservative temperate-climate figures, used as a
+    // placeholder so Bay Area ZIPs are at least recognised. Replace with real
+    // Bay Area numbers before this section is unhidden — the mild
+    // Mediterranean climate almost certainly supports more than this.
+    label: 'the Bay Area',
+    stats: ['6–14', '420+', '40', '1–3'],
+    note: 'Mild Mediterranean climate with a long cool season. Estimates are conservative pending local trial data.'
+  },
   houston: {
     label: 'Houston, TX',
     stats: ['8–16', '520+', '48', '1–2'],
@@ -280,6 +289,8 @@ const YIELD_DATA = {
 function getYieldProfile(zip) {
   if (!ZIP_PATTERN.test(zip)) return null;
   if (/^787\d{2}$|^786\d{2}$|^785\d{2}$/.test(zip)) return 'austin';
+  // Bay Area: 940xx-949xx (SF, Peninsula, East Bay, Marin) and 950xx-951xx (South Bay)
+  if (/^94\d{3}$|^95[01]\d{2}$/.test(zip)) return 'bayarea';
   if (/^770\d{2}$|^771\d{2}$|^772\d{2}$/.test(zip)) return 'houston';
   return 'default';
 }
