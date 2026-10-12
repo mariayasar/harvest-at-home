@@ -61,6 +61,57 @@ function initHeroZip() {
 // Isolated so it can be swapped for Typeform/Tally redirect
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+/* ----- Footer newsletter signup ----- */
+function initFooterSubscribe() {
+  const form = document.getElementById('footer-subscribe-form');
+  if (!form) return;
+
+  const input  = document.getElementById('footer-email');
+  const button = document.getElementById('footer-subscribe-btn');
+  const status = document.getElementById('footer-subscribe-status');
+
+  const showStatus = (msg, kind) => {
+    if (!status) return;
+    status.textContent = msg;
+    status.className = `footer-subscribe-status visible ${kind}`;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    // Without this the form does a native GET and reloads the page,
+    // discarding the address.
+    e.preventDefault();
+
+    const email = (input.value || '').trim();
+    if (!EMAIL_PATTERN.test(email)) {
+      input.classList.add('form-input-error');
+      input.focus();
+      showStatus('Please enter a valid email address.', 'error');
+      return;
+    }
+    input.classList.remove('form-input-error');
+
+    const original = button ? button.textContent : '';
+    if (button) {
+      button.disabled = true;
+      button.textContent = 'Subscribing…';
+    }
+
+    try {
+      await postToEndpoint({ form: 'subscribe', email });
+      form.reset();
+      showStatus('You\'re on the list.', 'success');
+    } catch (err) {
+      console.error('[Harvest] Subscribe failed:', err);
+      showStatus('Couldn\'t subscribe just now. Please try again.', 'error');
+    } finally {
+      if (button) {
+        button.disabled = false;
+        button.textContent = original;
+      }
+    }
+  });
+}
+
 async function handleContactFormSubmit(e) {
   e.preventDefault();
   const form   = e.currentTarget;
@@ -749,6 +800,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initScrollAnimations();
   initHeroZip();
   initContactForm();
+  initFooterSubscribe();
   initNav();
   initNavScroll();
   initMidCta();

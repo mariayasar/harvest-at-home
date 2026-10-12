@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" />
-  <link rel="stylesheet" href="css/styles.css?v=6" />
+  <link rel="stylesheet" href="css/styles.css?v=7" />
 </head>
 <body>
 
@@ -629,10 +629,11 @@
         <p class="footer-tagline">Private kitchen garden systems. Designed, installed, and maintained for families who care what goes into their food.</p>
         <div class="footer-subscribe">
           <p class="footer-subscribe-label">Get updates from Harvest</p>
-          <form class="footer-subscribe-form" aria-label="Email newsletter" novalidate>
-            <input type="email" placeholder="Enter your email..." class="footer-email-input" aria-label="Email address" />
-            <button type="submit" class="footer-subscribe-btn">Subscribe</button>
+          <form class="footer-subscribe-form" id="footer-subscribe-form" aria-label="Email newsletter" novalidate>
+            <input type="email" id="footer-email" placeholder="Enter your email..." class="footer-email-input" aria-label="Email address" autocomplete="email" required />
+            <button type="submit" class="footer-subscribe-btn" id="footer-subscribe-btn">Subscribe</button>
           </form>
+          <p class="footer-subscribe-status" id="footer-subscribe-status" role="status" aria-live="polite"></p>
         </div>
       </div>
 
@@ -824,7 +825,7 @@
     </div><!-- /.survey-inner -->
   </div><!-- /#survey-modal -->
 
-  <script src="js/config.js?v=6"></script>
-  <script src="js/main.js?v=6"></script>
+  <script src="js/config.js?v=7"></script>
+  <script src="js/main.js?v=7"></script>
 </body>
 </html>

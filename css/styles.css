@@ -1934,6 +1934,18 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   transition: opacity 0.2s;
 }
 .footer-subscribe-btn:hover { opacity: 0.88; }
+.footer-subscribe-btn[disabled] { opacity: 0.6; cursor: default; }
+
+/* Signup feedback */
+.footer-subscribe-status {
+  margin-top: 0.65rem;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  display: none;
+}
+.footer-subscribe-status.visible { display: block; }
+.footer-subscribe-status.success { color: var(--mint); }
+.footer-subscribe-status.error { color: #e0b44a; }
 
 /* Nav columns */
 .footer-nav {
