@@ -2422,6 +2422,12 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   text-transform: uppercase;
   color: var(--mid);
 }
+.survey-field-optional {
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: 0.02em;
+  opacity: 0.7;
+}
 .survey-optional { font-weight: 300; text-transform: none; letter-spacing: 0; }
 
 .survey-error-msg {
