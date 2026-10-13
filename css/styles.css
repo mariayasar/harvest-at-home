@@ -449,7 +449,7 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
   color: rgba(255,255,255,0.9);
   max-width: 520px;
   line-height: 1.65;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.1rem;
   animation: heroFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both;
 }
 
@@ -518,11 +518,14 @@ button { cursor: pointer; border: none; background: none; font-family: inherit; 
 }
 .hero-cta-pill:hover .hero-cta-action { opacity: 0.88; }
 
+/* Sits under the hero sub-line, so it reads as part of the pitch rather than
+   fine print — slightly larger and brighter than when it lived under the CTA. */
 .hero-service-note {
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.65);
-  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: rgba(255,255,255,0.75);
+  max-width: 520px;
   letter-spacing: 0.01em;
+  animation: heroFadeUp 0.85s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
 }
 
 /* =========================================================
