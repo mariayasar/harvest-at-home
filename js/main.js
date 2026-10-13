@@ -270,7 +270,7 @@ const YIELD_DATA = {
     // placeholder so Bay Area ZIPs are at least recognised. Replace with real
     // Bay Area numbers before this section is unhidden — the mild
     // Mediterranean climate almost certainly supports more than this.
-    label: 'the Bay Area',
+    label: 'the Bay Area, CA',
     stats: ['6–14', '420+', '40', '1–3'],
     note: 'Mild Mediterranean climate with a long cool season. Estimates are conservative pending local trial data.'
   },
